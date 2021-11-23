@@ -35,46 +35,56 @@ function App() {
   return (
     <React.Fragment>
       <GlobalStyle />
-      <Container>
-        <FormContainer>
-          <Row>
-            <Col>Freezing threshold</Col>
-            <Col>{CONST.THRESHOLD_FREEZING}</Col>
-          </Row>
-          <Row>
-            <Col>Boiling threshold</Col>
-            <Col>{CONST.THRESHOLD_BOILING}</Col>
-          </Row>
-          <Row>
-            <Col>Fluctuation</Col>
-            <Col>{CONST.FLUCTUATION}</Col>
-          </Row>
-        </FormContainer>
+      <div>
+        <Container>
+          <Title>Temperature Alert App</Title>
+
+          <SectionContainer>
+            <Row>
+              <Col>
+                <strong>Freezing threshold</strong>
+              </Col>
+              <Col>{CONST.THRESHOLD_FREEZING}</Col>
+            </Row>
+            <Row>
+              <Col>
+                <strong>Boiling threshold</strong>
+              </Col>
+              <Col>{CONST.THRESHOLD_BOILING}</Col>
+            </Row>
+            <Row>
+              <Col>
+                <strong>Fluctuation</strong>
+              </Col>
+              <Col>{CONST.FLUCTUATION}</Col>
+            </Row>
+          </SectionContainer>
+
+          {!!tempWithAlerts.length && (
+            <SectionContainer>
+              <TemperatureList items={tempWithAlerts} />
+            </SectionContainer>
+          )}
+        </Container>
 
         <FormContainer>
           <form onSubmit={handleSubmit}>
-            <Row>
-              <Col>
-                <label htmlFor='temperature'>Temperature</label>
-              </Col>
-              <Col>
-                <input
+            <Flex>
+              <FlexBox>
+                <Textbox
                   id='temperature'
                   value={temperature}
                   onChange={handleOnChange}
+                  placeholder='Please input temperature'
                 />
-              </Col>
-            </Row>
-            <Row>
-              <button type='submit'>Enter</button>
-            </Row>
+              </FlexBox>
+              <FlexBox>
+                <SubmitButton type='submit'>Enter</SubmitButton>
+              </FlexBox>
+            </Flex>
           </form>
         </FormContainer>
-
-        <ResultContainer>
-          <TemperatureList items={tempWithAlerts} />
-        </ResultContainer>
-      </Container>
+      </div>
     </React.Fragment>
   )
 }
@@ -83,20 +93,74 @@ const Container = styled.div`
   margin: 24px;
 `
 
+const Title = styled.h1`
+  font-size: 24px;
+  text-align: center;
+  margin: 24px 0;
+`
+
+const SectionContainer = styled.div`
+  border: 1px solid #5f6368;
+  border-radius: 10px;
+  padding: 16px;
+  max-width: 400px;
+  margin: 0 auto 24px; ;
+`
+
 const Row = styled.div`
   display: flex;
   > * {
     flex: 1 0 auto;
   }
-  margin-bottom: 24px;
+  padding: 12px 0;
 `
 
 const Col = styled.div`
   width: 50%;
 `
 
-const FormContainer = styled.div``
+const FormContainer = styled.div`
+  background-color: #303134;
+  padding: 16px 24px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+`
 
-const ResultContainer = styled.div``
+const Flex = styled.div`
+  display: flex;
+  justify-content: center;
+`
+
+const FlexBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+`
+
+const Textbox = styled.input.attrs({
+  type: 'text',
+})`
+  height: 40px;
+  width: 200px;
+  border: none;
+  border-radius: 4px;
+`
+
+const SubmitButton = styled.button.attrs({
+  type: 'submit',
+})`
+  background-color: #28a745;
+  border: 1px solid #28a745;
+  border-radius: 4px;
+  color: #eee;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 600;
+  width: 150px;
+  height: 40px;
+`
 
 export default App
